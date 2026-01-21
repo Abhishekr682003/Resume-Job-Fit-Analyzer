@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import axios from 'axios';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import Login from './pages/Login';
@@ -11,6 +12,11 @@ import AnalysisResult from './pages/AnalysisResult';
 import AdminPanel from './pages/AdminPanel';
 import Navbar from './components/Navbar';
 import './App.css';
+
+// Set base URL from environment variable if available
+if (process.env.REACT_APP_API_BASE_URL) {
+  axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
+}
 
 function App() {
   return (
