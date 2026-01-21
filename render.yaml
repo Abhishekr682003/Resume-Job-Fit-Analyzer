@@ -3,6 +3,7 @@ services:
   - type: web
     name: ats-backend
     env: docker
+    plan: free
     dockerContext: backend
     dockerfilePath: backend/Dockerfile
     healthCheckPath: /health
@@ -24,6 +25,7 @@ services:
   - type: web
     name: ats-frontend
     env: docker
+    plan: free
     dockerContext: frontend
     dockerfilePath: frontend/Dockerfile
     envVars:
