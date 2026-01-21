@@ -4,12 +4,11 @@ services:
     name: ats-backend
     env: docker
     context: backend
-    dockerfilePath: ./Dockerfile
-    plan: free
-    healthCheckPath: /health # Assuming /health exists as per instructions
+    # dockerfilePath defaults to Dockerfile in the context (backend/Dockerfile)
+    healthCheckPath: /health
     envVars:
       - key: PORT
-        value: 8080
+        value: "8080"
       - key: DB_URL
         sync: false
       - key: DB_USERNAME
@@ -26,8 +25,7 @@ services:
     name: ats-frontend
     env: docker
     context: frontend
-    dockerfilePath: ./Dockerfile
-    plan: free
+    # dockerfilePath defaults to Dockerfile in the context (frontend/Dockerfile)
     envVars:
       - key: REACT_APP_API_BASE_URL
         fromService:
