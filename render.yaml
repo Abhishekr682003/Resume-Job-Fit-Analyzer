@@ -3,7 +3,7 @@ services:
   - type: web
     name: ats-backend
     env: docker
-    context: backend
+    dockerContext: backend
     dockerfilePath: backend/Dockerfile
     healthCheckPath: /health
     envVars:
@@ -24,7 +24,7 @@ services:
   - type: web
     name: ats-frontend
     env: docker
-    context: frontend
+    dockerContext: frontend
     dockerfilePath: frontend/Dockerfile
     envVars:
       - key: REACT_APP_API_BASE_URL
