@@ -17,7 +17,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Database Connection
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ats_resume_db';
-mongoose.connect(mongoURI)
+mongoose.connect(mongoURI, {
+    serverSelectionTimeoutMS: 5000 // Timeout after 5 seconds if DB is unreachable
+})
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.error('MongoDB Connection Error:', err));
 
@@ -31,6 +33,10 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'UP' });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+module.exports = app;
