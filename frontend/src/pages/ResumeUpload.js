@@ -12,8 +12,8 @@ const ResumeUpload = () => {
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      const allowedTypes = ['application/pdf', 'application/msword', 
-                           'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      const allowedTypes = ['application/pdf', 'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
       if (allowedTypes.includes(selectedFile.type)) {
         setFile(selectedFile);
         setError('');
@@ -39,10 +39,8 @@ const ResumeUpload = () => {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('/api/resumes/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      await axios.post('/api/resumes/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
       setSuccess('Resume uploaded successfully!');
       setTimeout(() => {
@@ -56,40 +54,94 @@ const ResumeUpload = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{ maxWidth: '600px' }}>
       <div className="card">
-        <h1>Upload Resume</h1>
-        <p>Upload your resume in PDF, DOC, or DOCX format for analysis.</p>
+        <h1 style={{ textAlign: 'center', marginBottom: '8px' }}>Upload Resume</h1>
+        <p style={{ textAlign: 'center', marginBottom: '40px' }}>
+          Upload your professional resume for instant AI analysis.
+        </p>
 
-        <form onSubmit={handleSubmit} style={{ marginTop: '30px' }}>
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Select Resume File</label>
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx"
-              onChange={handleFileChange}
-              required
-            />
-            <p style={{ fontSize: '14px', color: '#666', marginTop: '5px' }}>
-              Supported formats: PDF, DOC, DOCX (Max size: 10MB)
-            </p>
+            <label style={{ display: 'none' }}>Resume File</label>
+            <div
+              onClick={() => document.getElementById('resumeInput').click()}
+              style={{
+                border: '2px dashed var(--border)',
+                borderRadius: '12px',
+                padding: '48px 24px',
+                textAlign: 'center',
+                cursor: 'pointer',
+                transition: 'var(--transition)',
+                background: file ? 'rgba(79, 70, 229, 0.05)' : 'transparent',
+                borderColor: file ? 'var(--primary)' : 'var(--border)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--primary)';
+                e.currentTarget.style.background = 'rgba(79, 70, 229, 0.02)';
+              }}
+              onMouseLeave={(e) => {
+                if (!file) {
+                  e.currentTarget.style.borderColor = 'var(--border)';
+                  e.currentTarget.style.background = 'transparent';
+                }
+              }}
+            >
+              <input
+                id="resumeInput"
+                type="file"
+                accept=".pdf,.doc,.docx"
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+                required
+              />
+              <div style={{
+                width: '48px',
+                height: '48px',
+                background: 'rgba(79, 70, 229, 0.1)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 16px',
+                color: 'var(--primary)',
+                fontSize: '24px'
+              }}>
+                📄
+              </div>
+              <h3 style={{ fontSize: '1rem', marginBottom: '8px' }}>
+                {file ? file.name : 'Click to select resume'}
+              </h3>
+              <p style={{ fontSize: '0.875rem', margin: 0 }}>
+                {file ? 'File selected ready for upload' : 'Support PDF, DOC, DOCX up to 10MB'}
+              </p>
+            </div>
           </div>
 
-          {file && (
-            <div style={{ marginBottom: '20px', padding: '10px', background: '#f0f0f0', borderRadius: '4px' }}>
-              Selected: {file.name}
+          {error && <div className="error-message" style={{ marginBottom: '20px' }}>{error}</div>}
+          {success && (
+            <div className="success-message" style={{
+              marginBottom: '20px',
+              padding: '12px',
+              background: '#F0FDF4',
+              color: 'var(--success)',
+              borderRadius: '8px',
+              border: '1px solid #DCFCE7',
+              fontSize: '0.875rem',
+              textAlign: 'center',
+              fontWeight: '600'
+            }}>
+              {success}
             </div>
           )}
 
-          {error && <div className="error-message">{error}</div>}
-          {success && <div className="success-message">{success}</div>}
-
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-primary btn-block"
             disabled={loading || !file}
+            style={{ marginTop: '32px' }}
           >
-            {loading ? 'Uploading...' : 'Upload Resume'}
+            {loading ? 'Analyzing & Uploading...' : 'Upload & Analyze Resume'}
           </button>
         </form>
       </div>

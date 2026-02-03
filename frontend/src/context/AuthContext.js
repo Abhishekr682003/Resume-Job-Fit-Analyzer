@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       return {
         success: false,
-        error: error.response?.data || 'Registration failed',
+        error: error.response?.data?.message || error.response?.data || 'Registration failed',
       };
     }
   };
@@ -78,3 +78,4 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+

@@ -1,0 +1,59 @@
+.dashboard-hero {
+    text-align: center;
+    padding: 64px 0;
+    background: linear-gradient(180deg, rgba(79, 70, 229, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 24px;
+    margin-bottom: 48px;
+}
+
+.dashboard-hero h1 {
+    margin-bottom: 1rem;
+}
+
+.dashboard-hero p {
+    font-size: 1.125rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.section-header h2 {
+    margin-bottom: 0;
+}
+
+.resume-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.resume-card .card-content {
+    flex: 1;
+}
+
+.resume-card .card-footer {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 80px 40px;
+    background: var(--surface);
+    border: 2px dashed var(--border);
+    border-radius: 16px;
+}
+
+.quick-actions-grid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}

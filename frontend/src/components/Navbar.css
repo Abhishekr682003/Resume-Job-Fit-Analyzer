@@ -1,57 +1,89 @@
 .navbar {
-  background-color: #343a40;
-  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
   padding: 1rem 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
 }
 
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.02em;
+}
+
+.navbar-brand::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 6px;
 }
 
 .navbar-menu {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 8px;
 }
 
 .navbar-link {
-  color: white;
+  color: var(--text-muted);
   text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: var(--transition);
 }
 
 .navbar-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  background-color: var(--background);
+}
+
+.navbar-link.active {
+  color: var(--primary);
+  background-color: rgba(79, 70, 229, 0.1);
 }
 
 .navbar-user {
-  color: #ccc;
-  margin-right: 10px;
+  margin-left: 16px;
+  padding-left: 16px;
+  border-left: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-main);
 }
 
 @media (max-width: 768px) {
   .navbar-container {
-    flex-direction: column;
-    gap: 10px;
+    padding: 0 16px;
   }
 
-  .navbar-menu {
-    flex-wrap: wrap;
-    justify-content: center;
+  .navbar-link {
+    padding: 8px 12px;
+  }
+
+  .navbar-user {
+    display: none;
   }
 }

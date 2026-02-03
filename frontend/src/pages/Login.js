@@ -13,7 +13,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     const result = await login(email, password);
     if (result.success) {
       navigate('/dashboard');
@@ -25,13 +25,19 @@ const Login = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Login</h2>
+        <div className="auth-logo">
+          <div className="auth-logo-icon"></div>
+        </div>
+        <h2>Welcome Back</h2>
+        <p className="auth-subtitle">Log in to your account to continue</p>
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Email</label>
+            <label>Email Address</label>
             <input
               type="email"
               value={email}
+              Placeholder="name@company.com"
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -41,17 +47,18 @@ const Login = () => {
             <input
               type="password"
               value={password}
+              Placeholder="••••••••"
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
-          {error && <div className="error-message">{error}</div>}
+          {error && <div className="error-message" style={{ marginBottom: '16px' }}>{error}</div>}
           <button type="submit" className="btn btn-primary btn-block">
-            Login
+            Sign In
           </button>
         </form>
         <p className="auth-link">
-          Don't have an account? <Link to="/register">Register here</Link>
+          Don't have an account? <Link to="/register">Create one for free</Link>
         </p>
       </div>
     </div>
