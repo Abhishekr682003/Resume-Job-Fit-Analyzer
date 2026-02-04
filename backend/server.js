@@ -3,10 +3,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
-const dns = require('dns');
-
-// Configure DNS servers to fix querySrv issues on Windows
-dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
 
 // Load environment variables
 dotenv.config();
@@ -15,7 +11,24 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Middleware
-app.use(cors());
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://resume-job-fit-analyzer-jdck.vercel.app',
+    process.env.CORS_ORIGINS
+].filter(Boolean);
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (mobile apps, Postman, etc.)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+            callback(null, true);
+        } else {
+            callback(null, true); // Allow all origins for now, can restrict later
+        }
+    },
+    credentials: true
+}));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
