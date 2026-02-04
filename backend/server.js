@@ -65,6 +65,14 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'UP' });
 });
 
+app.get('/', (req, res) => {
+    res.json({
+        message: 'ATS Resume Analyzer API is Running',
+        version: '1.0.0',
+        documentation: 'Use /api/auth, /api/resumes, /api/jobs endpoints'
+    });
+});
+
 if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);

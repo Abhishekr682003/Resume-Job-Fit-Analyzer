@@ -9,14 +9,14 @@ exports.uploadResume = async (req, res) => {
             return res.status(400).json({ message: 'No file uploaded' });
         }
 
-        const filePath = req.file.path;
+        const fileBuffer = req.file.buffer;
         const fileExtension = path.extname(req.file.originalname).toLowerCase();
         let extractedText = '';
 
         if (fileExtension === '.pdf') {
-            extractedText = await extractTextFromPDF(filePath);
+            extractedText = await extractTextFromPDF(fileBuffer);
         } else if (fileExtension === '.docx' || fileExtension === '.doc') {
-            extractedText = await extractTextFromDOCX(filePath);
+            extractedText = await extractTextFromDOCX(fileBuffer);
         } else {
             return res.status(400).json({ message: 'Unsupported file format' });
         }
@@ -26,7 +26,7 @@ exports.uploadResume = async (req, res) => {
         const resume = new Resume({
             userId: req.user._id,
             fileName: req.file.originalname,
-            filePath: filePath,
+            filePath: "Stored in Memory (Vercel Ephemeral)",
             fileType: fileExtension.substring(1),
             extractedText,
             skills

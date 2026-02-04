@@ -5,20 +5,11 @@ const auth = require('../middleware/auth');
 const multer = require('multer');
 const path = require('path');
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const dir = 'uploads/resumes';
-        if (!require('fs').existsSync(dir)) {
-            require('fs').mkdirSync(dir, { recursive: true });
-        }
-        cb(null, dir);
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
+const storage = multer.memoryStorage();
+const upload = multer({
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 } // Limit to 5MB
 });
-
-const upload = multer({ storage });
 
 router.post('/upload', auth, upload.single('file'), resumeController.uploadResume);
 router.get('/my-resumes', auth, resumeController.getMyResumes);
